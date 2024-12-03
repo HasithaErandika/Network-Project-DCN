@@ -1,0 +1,182 @@
+Building configuration...
+
+Current configuration : 4527 bytes
+!
+version 15.1
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname Router
+!
+!
+!
+!
+ip dhcp excluded-address 192.168.86.181 192.168.86.190
+ip dhcp excluded-address 192.168.86.50 192.168.86.62
+ip dhcp excluded-address 192.168.86.116 192.168.86.126
+ip dhcp excluded-address 192.168.86.150 192.168.86.158
+ip dhcp excluded-address 192.168.86.250 192.168.86.254
+!
+ip dhcp pool Sales
+ network 192.168.86.0 255.255.255.192
+ default-router 192.168.86.62
+ dns-server 8.8.8.8
+ip dhcp pool HR
+ network 192.168.86.240 255.255.255.240
+ default-router 192.168.86.254
+ dns-server 8.8.8.8
+ip dhcp pool Development
+ network 192.168.86.64 255.255.255.192
+ default-router 192.168.86.126
+ dns-server 8.8.8.8
+ip dhcp pool Admin
+ network 192.168.86.128 255.255.255.224
+ default-router 192.168.86.158
+ dns-server 8.8.8.8
+ip dhcp pool IT
+ network 192.168.86.160 255.255.255.224
+ default-router 192.168.86.190
+ dns-server 8.8.8.8
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+!
+license udi pid CISCO2911/K9 sn FTX1524K813-
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ no ip address
+ ip access-group 100 in
+ ip access-group 100 out
+ ip nat inside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.101
+ encapsulation dot1Q 101
+ ip address 192.168.86.62 255.255.255.192
+ ip access-group BLOCK_SALES_TO_OTHERS in
+!
+interface GigabitEthernet0/0.102
+ encapsulation dot1Q 102
+ ip address 192.168.86.254 255.255.255.240
+ ip access-group BLOCK_HR_TO_OTHERS in
+!
+interface GigabitEthernet0/0.103
+ encapsulation dot1Q 103
+ ip address 192.168.86.126 255.255.255.192
+ ip access-group BLOCK_DEVELOPMENT_TO_OTHERS_N_ALLOW_SERVER in
+!
+interface GigabitEthernet0/0.104
+ encapsulation dot1Q 104
+ ip address 192.168.86.158 255.255.255.224
+ ip access-group BLOCK_ADMIN_TO_OTHERS in
+!
+interface GigabitEthernet0/0.105
+ encapsulation dot1Q 105
+ ip address 192.168.86.190 255.255.255.224
+ ip access-group BLOCK_IT_TO_OTHERS_N_ALLOW_SERVER in
+!
+interface GigabitEthernet0/0.106
+ encapsulation dot1Q 106
+ ip address 192.168.86.238 255.255.255.240
+ ip access-group 106 in
+!
+interface GigabitEthernet0/1
+ ip address 10.0.0.1 255.255.255.252
+ ip nat outside
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/2
+ no ip address
+ duplex auto
+ speed auto
+ shutdown
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip nat inside source list NAAT interface GigabitEthernet0/1 overload
+ip nat inside source list NAT interface GigabitEthernet0/1 overload
+ip classless
+!
+ip flow-export version 9
+!
+!
+ip access-list extended BLOCK_DEVELOPMENT_TO_OTHERS_N_ALLOW_SERVER
+ permit ip 192.168.86.64 0.0.0.63 host 192.168.86.225
+ permit ip 192.168.86.64 0.0.0.63 host 192.168.86.226
+ deny ip 192.168.86.64 0.0.0.63 192.168.86.240 0.0.0.15
+ deny ip 192.168.86.64 0.0.0.63 192.168.86.160 0.0.0.31
+ deny ip 192.168.86.64 0.0.0.63 192.168.86.0 0.0.0.63
+ deny ip 192.168.86.64 0.0.0.63 192.168.86.128 0.0.0.31
+ deny ip 192.168.86.64 0.0.0.63 192.168.86.224 0.0.0.15
+ permit ip any any
+ip access-list extended BLOCK_HR_TO_OTHERS
+ deny ip 192.168.86.240 0.0.0.15 192.168.86.64 0.0.0.63
+ deny ip 192.168.86.240 0.0.0.15 192.168.86.160 0.0.0.31
+ deny ip 192.168.86.240 0.0.0.15 192.168.86.0 0.0.0.63
+ deny ip 192.168.86.240 0.0.0.15 192.168.86.128 0.0.0.31
+ deny ip 192.168.86.240 0.0.0.15 192.168.86.224 0.0.0.15
+ permit ip any any
+ip access-list extended BLOCK_SALES_TO_OTHERS
+ deny ip 192.168.86.0 0.0.0.63 192.168.86.64 0.0.0.63
+ deny ip 192.168.86.0 0.0.0.63 192.168.86.160 0.0.0.31
+ deny ip 192.168.86.0 0.0.0.63 192.168.86.240 0.0.0.15
+ deny ip 192.168.86.0 0.0.0.63 192.168.86.128 0.0.0.31
+ deny ip 192.168.86.0 0.0.0.63 192.168.86.224 0.0.0.15
+ permit ip any any
+ip access-list extended BLOCK_ADMIN_TO_OTHERS
+ deny ip 192.168.86.128 0.0.0.31 192.168.86.64 0.0.0.63
+ deny ip 192.168.86.128 0.0.0.31 192.168.86.160 0.0.0.31
+ deny ip 192.168.86.128 0.0.0.31 192.168.86.240 0.0.0.15
+ deny ip 192.168.86.128 0.0.0.31 192.168.86.0 0.0.0.63
+ deny ip 192.168.86.128 0.0.0.31 192.168.86.224 0.0.0.15
+ permit ip any any
+ip access-list extended BLOCK_IT_TO_OTHERS_N_ALLOW_SERVER
+ permit ip 192.168.86.160 0.0.0.31 host 192.168.86.237
+ deny ip 192.168.86.160 0.0.0.31 192.168.86.240 0.0.0.15
+ deny ip 192.168.86.160 0.0.0.31 192.168.86.0 0.0.0.63
+ deny ip 192.168.86.160 0.0.0.31 192.168.86.64 0.0.0.63
+ deny ip 192.168.86.160 0.0.0.31 192.168.86.128 0.0.0.31
+ deny ip 192.168.86.160 0.0.0.31 192.168.86.224 0.0.0.15
+ permit ip any any
+!
+!
+!
+!
+!
+line con 0
+!
+line aux 0
+!
+line vty 0 4
+ login
+!
+!
+!
+end
