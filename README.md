@@ -11,17 +11,15 @@ This repository contains the detailed design and documentation of a secure, scal
 ## 📂 Repository Contents
 1. [Documentation](documentation/)  
    - Full project report in PDF.
-   - VLAN configurations, IP schemes, and logical topologies.
-2. [Diagrams](diagrams/)  
-   - Logical topology diagram.
-   - Physical topology diagram.
-3. [Configurations](configurations/)  
+     This PDF consists of below
+         - VLAN configurations, IP schemes, and logical topologies.
+         - Logical topology diagram.
+         - Physical topology diagram.
+         - Detailed project cost estimation.
+2. [Configurations](configurations/)  
    - Switch and router configurations in text files.
    - ACL and NAT rules.
-4. [Budget Breakdown](budget/)  
-   - Detailed project cost estimation.
-5. [Presentation](presentation/)  
-   - Final presentation slides used for project defense.
+
 
 
 ## 🔧 Tools and Technologies
