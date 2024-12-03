@@ -11,7 +11,7 @@ This repository contains the detailed design and documentation of a secure, scal
 ## 📂 Repository Contents
 1. [Documentation](documentation/)  
    - Full project report in PDF.
-     This PDF consists of below
+     This PDF consists of the below
          - VLAN configurations, IP schemes, and logical topologies.
          - Logical topology diagram.
          - Physical topology diagram.
@@ -19,6 +19,8 @@ This repository contains the detailed design and documentation of a secure, scal
 2. [Configurations](configurations/)  
    - Switch and router configurations in text files.
    - ACL and NAT rules.
+  
+In here open the Cisco Packet Tracer file with Cisco packet tracer.
 
 
 
